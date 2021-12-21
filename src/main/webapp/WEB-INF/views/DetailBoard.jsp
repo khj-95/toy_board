@@ -23,6 +23,14 @@
 				<input type="hidden" name="bdIdx" value="${boardForDetail.board.bdIdx}">
 				<div class="first">
 					<div>
+						<span>조회수</span>
+					</div>
+					<div>
+						${boardForDetail.board.views}
+					</div>
+				</div>
+				<div class="first">
+					<div>
 						<span>작성자</span>
 					</div>
 					<div>
@@ -42,7 +50,9 @@
 						<span>내용</span>
 					</div>
 					<div>
-						${boardForDetail.board.content}
+						<div style="width:300px;height:200px;">
+							${boardForDetail.board.content}
+						</div>
 					</div>
 				</div>
 				<div class="forth">

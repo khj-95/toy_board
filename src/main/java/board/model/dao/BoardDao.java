@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import board.model.dto.Board;
 import common.file.FileDTO;
@@ -33,6 +34,7 @@ public class BoardDao {
 				board.setRegDate(rset.getDate("reg_date"));
 				board.setTitle(rset.getString("title"));
 				board.setWriter(rset.getString("writer"));
+				board.setViews(rset.getInt("views"));
 				boardList.add(board);
 			}
 		} catch (SQLException e) {
@@ -119,6 +121,7 @@ public class BoardDao {
 				board.setTitle(rset.getString("title"));
 				board.setContent(rset.getString("content"));
 				board.setRegDate(rset.getDate("reg_date"));
+				board.setViews(rset.getInt("views"));
 			}
 			
 		} catch (SQLException e) {
@@ -180,6 +183,24 @@ public class BoardDao {
 		
 	}
 	
+	public void updateBoardViews(Board board, Connection conn) {
+		PreparedStatement pstm = null;
+		String query = "update board set views=? where bd_idx = ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setInt(1, board.getViews());
+			pstm.setInt(2, board.getBdIdx());
+			pstm.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(pstm);
+		}
+		
+	}
+	
 	public void updateFile(FileDTO fileDTO, Connection conn) {
 		PreparedStatement pstm = null;
 		String query = "update file_info set is_del=? where fl_idx = ?";
@@ -230,6 +251,58 @@ public class BoardDao {
 			jdbcTemplate.close(pstm);
 		}
 		
+	}
+
+	public int selectBoardCnt(Connection conn) {
+		int boardCnt = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "select count(*) cnt from board";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				boardCnt = rset.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset, stmt);
+		}
+		
+		return boardCnt;
+	}
+
+	public List<Board> selectBoardList(Connection conn, Map<String, Integer> map) {
+		List<Board> boardList = new ArrayList<Board>();
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		String query = "select * from (select rownum rnum, board.* from (select b.* from board b order by reg_date desc) board) where rnum between ? and ?";
+		
+		try {
+			pstm = conn.prepareStatement(query);
+			pstm.setInt(1, map.get("startBoard"));
+			pstm.setInt(2, map.get("lastBoard"));
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+				Board board = new Board();
+				board.setBdIdx(rset.getInt("bd_idx"));
+				board.setContent(rset.getString("content"));
+				board.setRegDate(rset.getDate("reg_date"));
+				board.setTitle(rset.getString("title"));
+				board.setWriter(rset.getString("writer"));
+				board.setViews(rset.getInt("views"));
+				boardList.add(board);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset, pstm);
+		}
+		
+		return boardList;
 	}
 
 	

@@ -9,6 +9,7 @@ public class Board {
 	private String title;
 	private Date regDate;
 	private String content;
+	private Integer views;
 	
 	public Integer getBdIdx() {
 		return bdIdx;
@@ -40,11 +41,18 @@ public class Board {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public Integer getViews() {
+		return views;
+	}
+	public void setViews(Integer views) {
+		this.views = views;
+	}
 	@Override
 	public String toString() {
 		return "Board [bdIdx=" + bdIdx + ", writer=" + writer + ", title=" + title + ", regDate=" + regDate
-				+ ", content=" + content + "]";
+				+ ", content=" + content + ", views=" + views + "]";
 	}
+
 	
 	
 

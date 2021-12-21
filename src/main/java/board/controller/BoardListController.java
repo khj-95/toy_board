@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oreilly.servlet.multipart.MultipartParser;
-
 import board.model.dto.Board;
 import board.model.service.BoardService;
 import common.file.FileDTO;
@@ -37,10 +35,14 @@ public class BoardListController extends HttpServlet {
 		
 		switch(uriArr[uriArr.length - 1]) {
 		case "board-list": 
-			
-			List<Board> boardList = boardService.selectAllBoardList();
-			
-			request.setAttribute("boardList", boardList);
+			//페이징
+			int page = 1;
+			if(request.getParameter("page") != null) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+			page = page == 0 ? 1 : page;
+			Map<String, Object> pageAndBoards = boardService.selectAllBoardList(page);
+			request.setAttribute("pageAndBoard", pageAndBoards);
 			
 			request.getRequestDispatcher("BoardList").forward(request, response);
 			
@@ -98,6 +100,8 @@ public class BoardListController extends HttpServlet {
 		case "board-detail":
 			
 			bdIdx = Integer.parseInt(request.getParameter("bdIdx"));
+			//조회수 업데이트
+			boardService.updateBoardViewsByBdIdx(bdIdx);
 			
 			Map<String, Object> boardForDetail = boardService.selectBoardByBdIdx(bdIdx);
 			

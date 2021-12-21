@@ -10,23 +10,33 @@ import board.model.dao.BoardDao;
 import board.model.dto.Board;
 import common.file.FileDTO;
 import common.jdbc.JDBCTemplate;
+import common.paging.Paging;
 
 public class BoardService {
 
 	JDBCTemplate jdbcTemplate = JDBCTemplate.getInstance();
 	BoardDao boardDao = new BoardDao();
 	
-	public List<Board> selectAllBoardList() {
-		List<Board> boardList = new ArrayList<Board>();
+	public Map<String, Object> selectAllBoardList(int page) {
+		Map<String, Object> pageAndBoards = new HashMap<String,Object>();
 		Connection conn = null;
+		
 		try {
 			conn = jdbcTemplate.getConnection();
-			boardList = boardDao.selectAllBoardList(conn);
+			int total = boardDao.selectBoardCnt(conn);
+			int nowPage = page;
+			int cntPerPage = 5;
+			String url = "/board/board-list";
+			Paging pageUtil = new Paging(total, nowPage, cntPerPage, url);
+			pageAndBoards.put("paging",pageUtil);
+			List<Board> boards = boardDao.selectBoardList(conn,
+					(Map<String, Integer>) Map.of("startBoard",pageUtil.getStartBoard(),"lastBoard",pageUtil.getEndBoard()));
+			pageAndBoards.put("boards",boards);
 		} finally {
 			jdbcTemplate.close(conn);
 		}
 		
-		return boardList;
+		return pageAndBoards;
 	}
 
 	public void insertBoard(Board board, List<FileDTO> fileDTOs) {
@@ -133,6 +143,25 @@ public class BoardService {
 			
 			boardDao.deleteBoard(bdIdx, conn);
 			boardDao.deleteFile(bdIdx, conn);
+			
+			jdbcTemplate.commit(conn);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jdbcTemplate.rollback(conn);
+		} finally {
+			jdbcTemplate.close(conn);
+		}
+		
+	}
+
+	public void updateBoardViewsByBdIdx(Integer bdIdx) {
+		Connection conn = null;
+		try {
+			conn = jdbcTemplate.getConnection();
+			
+			Board board = boardDao.selectBoardByBdIdx(bdIdx, conn);
+			board.setViews(board.getViews()+ 1);
+			boardDao.updateBoardViews(board, conn);
 			
 			jdbcTemplate.commit(conn);
 		} catch (Exception e) {

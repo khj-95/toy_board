@@ -41,7 +41,7 @@
 						<span>내용</span>
 					</div>
 					<div>
-						<textarea name="content"></textarea>
+						<textarea style="width:300px;height:200px;" name="content"></textarea>
 					</div>
 				</div>
 				<div class="forth">
