@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+body{
+	width: 100%;
+	height: 100%;
+}
+
+.top .middle{
+	width: 70%;
+}
+
+.board-form-top>div{
+	display: flex;
+	height: 30px;
+}
+
+.board-form-top div span {
+	text-align: center;
+}
