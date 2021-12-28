@@ -102,7 +102,7 @@ public class BoardListController extends HttpServlet {
 			bdIdx = Integer.parseInt(request.getParameter("bdIdx"));
 			//조회수 업데이트
 			boardService.updateBoardViewsByBdIdx(bdIdx);
-			
+			//게시글 상세내역 조회
 			Map<String, Object> boardForDetail = boardService.selectBoardByBdIdx(bdIdx);
 			
 			request.setAttribute("boardForDetail", boardForDetail);

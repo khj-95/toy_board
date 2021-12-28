@@ -61,9 +61,8 @@
 					</div>
 					<div>
 						<c:forEach items="${boardForDetail.files}" var="file" varStatus="s">
-							<a href="/download?flIdx=${file.flIdx}" >
-								<img style="width:300px;height:200px;" src="${file.savePath}${file.renameFileName}">
-							</a>
+							<img onclick="downloadFile('${file.originFileName}','${file.renameFileName}','${file.savePath}')" 
+							style="width:300px;height:200px;" src="${file.downloadURL}">
 						</c:forEach>
 					</div>
 				</div>
@@ -81,6 +80,12 @@
 
 </footer>
 <script type="text/javascript">
+	let downloadFile = (ofn,rfn,path)=>{
+		let paramObj = "originFileName=" + ofn + "&renameFileName=" + rfn + "&savePath=" + path;
+		
+		location.href = '/download?' + encodeURI(paramObj);
+	}
+
 	function deleteBoard(bdIdx){
 		document.getElementById("submit").setAttribute("action", "/board/delete-board");
 		document.getElementById("submit").submit();

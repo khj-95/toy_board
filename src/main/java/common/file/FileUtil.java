@@ -46,7 +46,7 @@ public class FileUtil {
 					int year = today.get(Calendar.YEAR);
 					int month = today.get(Calendar.MONTH) +1;
 					int date = today.get(Calendar.DATE);
-					String subPath = year + "\\" + month + "\\" + date + "\\";
+					String subPath = year + "/" + month + "/" + date + "/";
 					//2-2. 저장경로를 웹어플리케이션 외부로 지정
 					String savePath = "C:\\CODE\\upload\\" + subPath;
 					File dir = new File(savePath);
@@ -55,8 +55,8 @@ public class FileUtil {
 					}
 					//3. FileDTO 생성
 					fileDTO.setOriginFileName(filePart.getFileName());
-					fileDTO.setRenameFileName(renameFileName + "." +FilenameUtils.getExtension(filePart.getFileName()));
-					fileDTO.setSavePath("\\file\\"+subPath);
+					fileDTO.setRenameFileName(renameFileName + "." + FilenameUtils.getExtension(filePart.getFileName()));
+					fileDTO.setSavePath(subPath);
 					//파일저장
 					filePart.writeTo(new File(savePath + fileDTO.getRenameFileName())); 
 					fileDTOs.add(fileDTO);

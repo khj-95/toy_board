@@ -46,7 +46,7 @@
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
-				<c:forEach var="i" begin="${pageAndBoard.paging.startPage}" end="${pageAndBoard.paging.endPage}">
+				<c:forEach var="i" begin="${pageAndBoard.paging.start}" end="${pageAndBoard.paging.end}">
 				<li class="page-item">
 					<a href="${pageAndBoard.paging.url}?page=${i}" class="page-link">${i}</a>
 				</li>

@@ -27,7 +27,12 @@ public class BoardService {
 			int nowPage = page;
 			int cntPerPage = 5;
 			String url = "/board/board-list";
-			Paging pageUtil = new Paging(total, nowPage, cntPerPage, url);
+			Paging pageUtil = Paging.builder()
+									.total(total)
+									.nowPage(nowPage)
+									.cntPerPage(cntPerPage)
+									.url(url)
+									.build();
 			pageAndBoards.put("paging",pageUtil);
 			List<Board> boards = boardDao.selectBoardList(conn,
 					(Map<String, Integer>) Map.of("startBoard",pageUtil.getStartBoard(),"lastBoard",pageUtil.getEndBoard()));

@@ -53,7 +53,7 @@
 						<input type="file" name="files" multiple="multiple">
 						<c:forEach items="${boardForModify.files}" var="file" varStatus="s">
 							<label id="${file.flIdx}">
-							<img style="width:300px;height:200px;" src="${file.savePath}${file.renameFileName}">
+							<img style="width:300px;height:200px;" src="${file.downloadURL}">
 							<input type="hidden" name="keepFiles" value="${file.flIdx}">
 							<button type="button" onclick="deleteImg(${file.flIdx})">삭제</button>
 							</label>

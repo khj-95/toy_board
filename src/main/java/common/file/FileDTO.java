@@ -55,6 +55,10 @@ public class FileDTO {
 		this.isDel = isDel;
 	}
 	
+	public String getDownloadURL() {
+		return "/file/" + savePath + renameFileName + "?originName=" + originFileName;
+	}
+	
 	@Override
 	public String toString() {
 		return "FileDTO [flIdx=" + flIdx + ", memBdIdx=" + memBdIdx + ", originFileName=" + originFileName

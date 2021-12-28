@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import board.model.dto.Board;
+import common.exception.DataAccessException;
 import common.file.FileDTO;
 import common.jdbc.JDBCTemplate;
 
@@ -38,7 +39,7 @@ public class BoardDao {
 				boardList.add(board);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(rset, stmt);
 		}
@@ -59,7 +60,7 @@ public class BoardDao {
 			pstm.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(pstm);
 		}
@@ -80,7 +81,7 @@ public class BoardDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(pstm);
 		}
@@ -99,7 +100,7 @@ public class BoardDao {
 			pstm.setString(4, fileDTO.getSavePath());
 			pstm.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(pstm);
 		}
@@ -125,7 +126,7 @@ public class BoardDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(rset, stmt);
 		}
@@ -155,7 +156,7 @@ public class BoardDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(rset, stmt);
 		}
@@ -176,7 +177,7 @@ public class BoardDao {
 			pstm.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(pstm);
 		}
@@ -194,7 +195,7 @@ public class BoardDao {
 			pstm.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(pstm);
 		}
@@ -212,7 +213,7 @@ public class BoardDao {
 			pstm.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(pstm);
 		}
@@ -229,7 +230,7 @@ public class BoardDao {
 			pstm.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(pstm);
 		}
@@ -246,7 +247,7 @@ public class BoardDao {
 			pstm.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(pstm);
 		}
@@ -266,7 +267,7 @@ public class BoardDao {
 				boardCnt = rset.getInt("cnt");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(rset, stmt);
 		}
@@ -297,7 +298,7 @@ public class BoardDao {
 				boardList.add(board);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		} finally {
 			jdbcTemplate.close(rset, pstm);
 		}

@@ -16,4 +16,12 @@
   	<filter-name>SetCharacterEncoding</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <!-- 시스템에서 발생한 예외나, 응답 상태코드에 따라 원하는 에러페이지를 지정 
+ 	ex) 404 상태코드일 경우, 사용자에게 보여줄 페이지 지정
+ 		DataAccessException이 발생했을 때 사용자에게 보여줄 페이지 지정  -->
+  <error-page>
+ 	<exception-type>common.exception.HandleableException</exception-type>
+ 	<location>/exception-handler</location>
+  </error-page>
 </web-app>
