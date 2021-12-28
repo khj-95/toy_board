@@ -1,77 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet"  href="${contextPath}/resources/css/writeBoard.css">
-</head>
-<body>
-<header>
-	<h1>게시판</h1>
-</header>
-<section>
-	<div class="top">
-		<h3>게시글 작성</h3>
-	</div>
-	<div class="middle">
-		<div class="board-form-top">
-			<form id="submit" action="/board/modify-board" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="bdIdx" value="${boardForModify.board.bdIdx}">
-				<div class="first">
-					<div>
-						<span>작성자</span>
-					</div>
-					<div>
-						<input type="text" name="writer" value="${boardForModify.board.writer}">
-					</div>
-				</div>
-				<div class="second">
-					<div>
-						<span>제목</span>
-					</div>
-					<div>
-						<input type="text" name="title" value="${boardForModify.board.title}">
-					</div>
-				</div>
-				<div class="third">
-					<div>
-						<span>내용</span>
-					</div>
-					<div>
-						<textarea style="width:300px;height:200px;" name="content">${boardForModify.board.content}</textarea>
-					</div>
-				</div>
-				<div class="forth">
-					<div>
-						<span>파일/사진</span>
-					</div>
-					<div>
-						<input type="file" name="files" multiple="multiple">
-						<c:forEach items="${boardForModify.files}" var="file" varStatus="s">
-							<label id="${file.flIdx}">
-							<img style="width:300px;height:200px;" src="${file.downloadURL}">
-							<input type="hidden" name="keepFiles" value="${file.flIdx}">
-							<button type="button" onclick="deleteImg(${file.flIdx})">삭제</button>
-							</label>
-						</c:forEach>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="board-form-bottom">
-			<button class="btn" id="cancel-btn" onclick="detailBoard(${boardForModify.board.bdIdx})">취소</button>
-			<button class="btn" id="submit-btn" onclick="formSubmit()">수정하기</button>
-		</div>
-		
-	</div>
-</section>
-<footer>
 
-</footer>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet"  href="${contextPath}/resources/css/input.css">
+    <title>board</title>
+</head>
+
+<body>
+    <div class="board-wrap">
+       
+        <div class="wt-board">
+            <form id="submit" action="/board/modify-board" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="bdIdx" value="${boardForModify.board.bdIdx}">
+                <div class="input-title-file">
+                    <input type="text" id="ex-writer" name="writer" style="width:25%" value="${boardForModify.board.writer}" readonly="readonly">
+                    <input type="text" name="title" placeholder="제목을 입력해 주세요." maxlength="20" value="${boardForModify.board.title}">
+                    <div class="fileBox">
+                        <label for="ex-file">파일올리기</label>
+                        <input type="file" id="ex-file" name="files" multiple="multiple">
+                    </div>
+                </div>
+                <div>
+                   	<c:forEach items="${boardForModify.files}" var="file" varStatus="s">
+						<label id="${file.flIdx}">
+						<img style="width:300px;height:200px;" src="${file.downloadURL}">
+						<input type="hidden" name="keepFiles" value="${file.flIdx}">
+						<button type="button" onclick="deleteImg(${file.flIdx})">삭제</button>
+						</label>
+					</c:forEach>
+                </div>
+                <div class="input-content">
+                    <textarea class="content" name="content" placeholder="내용">${boardForModify.board.content}</textarea>
+                </div>
+                <input class="submit-button" type="button" value="취소" onclick="detailBoard(${boardForModify.board.bdIdx})">
+                <input class="submit-button" type="button" value="수정하기" onclick="formSubmit()">
+            </form>
+        </div>
+    </div>
 <script type="text/javascript">
 	function formSubmit(){
 		document.getElementById("submit").submit();
@@ -85,6 +59,5 @@
 		location.href = "/board/board-detail?bdIdx=" + bdIdx;
 	}
 </script>
-
 </body>
 </html>

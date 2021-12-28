@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.code.Config;
+import common.code.ErrorCode;
+import common.exception.HandleableException;
 
 @WebServlet("/download")
 public class FileHandler extends HttpServlet {
@@ -47,7 +49,7 @@ public class FileHandler extends HttpServlet {
 				fos.write(data);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new HandleableException(ErrorCode.FAILED_FILE_DOWNLOAD_ERROR, e);
 		}
 		//파일명이 한글인 경우도 있어서 URLEncoder 클래스의 encode 메서드를 사용하여 UTF-8로 인코딩
 		String originFileName = URLEncoder.encode(request.getParameter("originFileName"),"UTF-8");
