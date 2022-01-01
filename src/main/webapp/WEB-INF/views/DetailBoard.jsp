@@ -36,7 +36,7 @@
                 <div class="input-content">
                     <textarea class="content" name="content" placeholder="내용" readonly="readonly">${boardForDetail.board.content}</textarea>
                 </div>
-                <input class="submit-button" type="button" value="취소" onclick="boardList()">
+                <input class="submit-button" type="button" value="취소" onclick="boardList(${nowPage})">
                 <input class="submit-button" type="button" value="삭제" onclick="deleteBoard()">
                 <input class="submit-button" type="button" value="수정" onclick="modifyBoard()">
             </form>
@@ -59,8 +59,8 @@
 		document.getElementById("submit").submit();
 	}
 	
-	function boardList(){
-		location.href="/board/board-list";
+	function boardList(nowPage){
+		location.href="/board/board-list?page=" + nowPage;
 	}
 </script>
 </body>

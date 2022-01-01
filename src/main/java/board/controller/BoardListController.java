@@ -57,7 +57,9 @@ public class BoardListController extends HttpServlet {
 		}
 		page = page == 0 ? 1 : page;
 		Map<String, Object> pageAndBoards = boardService.selectAllBoardList(page);
-		request.setAttribute("pageAndBoard", pageAndBoards);
+		
+		request.setAttribute("paging", pageAndBoards.get("paging"));
+		request.setAttribute("boards", pageAndBoards.get("boards"));
 		
 		request.getRequestDispatcher("BoardList").forward(request, response);
 	}
@@ -105,12 +107,14 @@ public class BoardListController extends HttpServlet {
 	
 	private void boardDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer bdIdx = Integer.parseInt(request.getParameter("bdIdx"));
+		Integer nowPage = Integer.parseInt(request.getParameter("nowPage"));
 		//조회수 업데이트
 		boardService.updateBoardViewsByBdIdx(bdIdx);
 		//게시글 상세내역 조회
 		Map<String, Object> boardForDetail = boardService.selectBoardByBdIdx(bdIdx);
 		
 		request.setAttribute("boardForDetail", boardForDetail);
+		request.setAttribute("nowPage", nowPage);
 		request.getRequestDispatcher("DetailBoard").forward(request, response);
 	}
 	

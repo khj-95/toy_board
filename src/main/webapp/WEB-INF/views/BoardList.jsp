@@ -46,13 +46,13 @@
                     </thead>
             
                     <tbody>
-                    	<c:forEach var="board" items="${pageAndBoard.boards}" varStatus="s">
+                    	<c:forEach var="board" items="${boards}" varStatus="s">
                             <tr class="board">
-                                <td onclick="detailBoard(${board.bdIdx})" class="td_num">${s.count}</td>
-                                <td onclick="detailBoard(${board.bdIdx})" class="td_title">${board.title}</td>
-                                <td onclick="detailBoard(${board.bdIdx})" class="td_name">${board.writer}</td>
-                                <td onclick="detailBoard(${board.bdIdx})" class="td_date">${board.regDate}</td>
-                                <td onclick="detailBoard(${board.bdIdx})" class="td_view">${board.views}</td>
+                                <td onclick="detailBoard(${board.bdIdx},${paging.nowPage})" class="td_num">${s.count}</td>
+                                <td onclick="detailBoard(${board.bdIdx},${paging.nowPage})" class="td_title">${board.title}</td>
+                                <td onclick="detailBoard(${board.bdIdx},${paging.nowPage})" class="td_name">${board.writer}</td>
+                                <td onclick="detailBoard(${board.bdIdx},${paging.nowPage})" class="td_date">${board.regDate}</td>
+                                <td onclick="detailBoard(${board.bdIdx},${paging.nowPage})" class="td_view">${board.views}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -66,17 +66,17 @@
 					<nav class="paging">
 						<ul class="pagination" style="display: flex;list-style-type: none;">
 							<li class="page-item">
-								<a class="page-link" href="${pageAndBoard.paging.url}?page=${pageAndBoard.paging.prev}" aria-label="Previous"> 
+								<a class="page-link" href="${paging.url}?page=${paging.prev}" aria-label="Previous"> 
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
-							<c:forEach var="i" begin="${pageAndBoard.paging.start}" end="${pageAndBoard.paging.end}">
+							<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
 							<li class="page-item">
-								<a href="${pageAndBoard.paging.url}?page=${i}" class="page-link">${i}</a>
+								<a href="${paging.url}?page=${i}" class="page-link">${i}</a>
 							</li>
 							</c:forEach>
 							<li class="page-item">
-								<a class="page-link" href="${pageAndBoard.paging.url}?page=${pageAndBoard.paging.next}"> 
+								<a class="page-link" href="${paging.url}?page=${paging.next}"> 
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>
@@ -87,8 +87,8 @@
     </div>
     
     <script type="text/javascript">
-	    function detailBoard(bdIdx){
-			location.href = "/board/board-detail?bdIdx=" + bdIdx;
+	    function detailBoard(bdIdx,nowPage){
+			location.href = "/board/board-detail?bdIdx=" + bdIdx + "&nowPage=" + nowPage;
 		}
 		
 		function boardForm(){
