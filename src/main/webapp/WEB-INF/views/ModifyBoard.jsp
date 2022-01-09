@@ -42,7 +42,7 @@
                 <div class="input-content">
                     <textarea class="content" name="content" placeholder="내용">${boardForModify.board.content}</textarea>
                 </div>
-                <input class="submit-button" type="button" value="취소" onclick="detailBoard(${boardForModify.board.bdIdx})">
+                <input class="submit-button" type="button" value="취소" onclick="detailBoard(${boardForModify.board.bdIdx},${nowPage})">
                 <input class="submit-button" type="button" value="수정하기" onclick="formSubmit()">
             </form>
         </div>
@@ -56,8 +56,8 @@
 		document.getElementById(flIdx).remove();
 	}
 	
-	function detailBoard(bdIdx){
-		location.href = "/board/board-detail?bdIdx=" + bdIdx;
+	function detailBoard(bdIdx,nowPage){
+		location.href = "/board/board-detail?bdIdx=" + bdIdx + "&nowPage=" + nowPage;
 	}
 </script>
 </body>
