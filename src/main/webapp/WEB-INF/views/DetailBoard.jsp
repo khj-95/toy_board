@@ -21,6 +21,7 @@
         <div class="wt-board">
             <form id="submit">
                 <input type="hidden" name="bdIdx" value="${boardForDetail.board.bdIdx}">
+                <input type="hidden" name="nowPage" value="${nowPage}">
                 <div class="input-title-file">
                     <input type="text" id="ex-writer" name="writer" style="width:25%" value="${boardForDetail.board.writer}" readonly="readonly">
                     <input type="text" name="title" value="${boardForDetail.board.title}" readonly="readonly">

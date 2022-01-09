@@ -21,6 +21,7 @@
         <div class="wt-board">
             <form id="submit" action="/board/modify-board" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="bdIdx" value="${boardForModify.board.bdIdx}">
+                <input type="hidden" name="nowPage" value="${nowPage}">
                 <div class="input-title-file">
                     <input type="text" id="ex-writer" name="writer" style="width:25%" value="${boardForModify.board.writer}" readonly="readonly">
                     <input type="text" name="title" placeholder="제목을 입력해 주세요." maxlength="20" value="${boardForModify.board.title}">

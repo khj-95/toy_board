@@ -83,6 +83,8 @@ public class BoardListController extends HttpServlet {
 		
 		Map<String, Object> boardForModify = boardService.selectBoardByBdIdx(bdIdx);
 		
+		request.setAttribute("nowPage", Integer.parseInt(request.getParameter("nowPage")));
+		
 		request.setAttribute("boardForModify", boardForModify);
 		
 		request.getRequestDispatcher("ModifyBoard").forward(request, response);
@@ -102,7 +104,7 @@ public class BoardListController extends HttpServlet {
 		String[] keepFiles = mpForModify.getParameterValues("keepFiles");
 		boardService.updateBoardByBdIdx(board,fileDTOsForModify, keepFiles);
 		
-		response.sendRedirect("/board/board-detail?bdIdx="+ mpForModify.getParameter("bdIdx"));
+		response.sendRedirect("/board/board-detail?bdIdx="+ mpForModify.getParameter("bdIdx") + "&nowPage=" + mpForModify.getParameter("nowPage"));
 	}
 	
 	private void boardDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
