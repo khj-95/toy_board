@@ -15,7 +15,7 @@ public class Paging {
 		this.total = builder.total;
 		this.url = builder.url;
 		calcLastPage(getTotal(), getCntPerPage());
-		calcStartAlarmEndAlarm(getNowPage(), getCntPerPage());
+		calcStartBoardEndBoard(getNowPage(), getCntPerPage());
 		calcStartEnd(getNowPage(), getLastPage());
 		calcPrevAndNext(getStart(), getEnd(), getLastPage());
 	}
@@ -28,7 +28,7 @@ public class Paging {
 		this.lastPage = lastPage;
 	}
 	// 현재 페이지 기준 시작, 끝 게시글 계산
-	public void calcStartAlarmEndAlarm(int nowPage, int cntPerPage) {
+	public void calcStartBoardEndBoard(int nowPage, int cntPerPage) {
 		this.startBoard = nowPage == 1 ? 1 : (nowPage-1)*cntPerPage+1;
 		int end = startBoard + cntPerPage -1;
 		this.endBoard = end > total ? total : end;
